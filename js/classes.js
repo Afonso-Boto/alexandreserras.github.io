@@ -65,11 +65,12 @@ class Estafeta {
 }
 
 class Produto {
-    constructor(nome, preco, produtor) {
+    constructor(nome, preco, produtor, tags) {
         this._nome = nome;
         this._preco = preco;
         this._produtor = produtor;
         this._quantidade = 0;
+        this._tags = tags;
     }
 
     get nome() {
@@ -80,6 +81,12 @@ class Produto {
     }
     get preco() {
         return this._preco;
+    }
+    get produtor() {
+        return this._produtor;
+    }
+    get tags() {
+        return this._tags;
     }
 
     set quantidade(q) {
