@@ -1,24 +1,14 @@
 $(document).ready(function () {
-    e = new Produto("f", "f", "f");
-    console.log(e.quantidade);
-
-    e.decrementar();
-    console.log(e.quantidade);
-
-    e.incrementar();
-    console.log(e.quantidade);
-
-    e.quantidade = 4;
-    console.log(e.quantidade);
-
     var produtos = [];
 
-    $.getJSON("../data/produtos.json", function (json) {
-        for (p in json) {
-            produtos.push(new Produto(p.nome, p.preco, p.produtor, p.tags));
-        }
-    });
+    var json = '[{"nome": "Alface","preco": 3,"produtor": "Alberto","tags": ["Vegetal"]},' +
+            '{ "nome": "Maçã", "preco": 2, "produtor": "Alberto", "tags": ["Fruta"] }]';
+
+    var parsed = JSON.parse(json);
+
+    for (p in parsed) {
+        produtos.push(new Produto(parsed[p].nome, parsed[p].preco, parsed[p].produtor, parsed[p].tags));
+    }
 
     console.log(produtos);
-    console.log(produtos.length);
 });

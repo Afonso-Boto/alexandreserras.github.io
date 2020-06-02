@@ -5,6 +5,7 @@ class Cliente {
         this._morada = morada;
         this._telemovel = telemovel;
         this._detPagamento = detPagamento;
+        this._carrinho = [];
     }
 
     get nome() {
@@ -21,6 +22,13 @@ class Cliente {
     }
     get detPagamento() {
         return this._detPagamento;
+    }
+    get carrinho() {
+        return this._carrinho;
+    }
+
+    adicionarAoCarrinho = function(p) {
+        this._carrinho.push(p);
     }
 }
 
