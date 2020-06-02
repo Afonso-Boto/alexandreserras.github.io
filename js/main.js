@@ -11,22 +11,14 @@ $(document).ready(function () {
     e.quantidade = 4;
     console.log(e.quantidade);
 
-    $.getJSON("../data/produtos.json", function (json) {
-        console.log(json); // this will show the info it in firebug console
-    });
-});
+    var produtos = [];
 
-function ajaxHelper(uri, method, data) {
-    self.error(''); // Clear error message
-    return $.ajax({
-        type: method,
-        url: uri,
-        dataType: 'json',
-        contentType: 'application/json',
-        data: data ? JSON.stringify(data) : null,
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log("AJAX Call[" + uri + "] Fail...");
-            self.error(errorThrown);
+    $.getJSON("../data/produtos.json", function (json) {
+        for (p in json) {
+            produtos.push(new Produto(p.nome, p.preco, p.produtor, p.tags));
         }
     });
-}
+
+    console.log(produtos);
+    console.log(produtos.length);
+});
