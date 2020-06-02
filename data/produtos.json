@@ -1,0 +1,14 @@
+[
+  {
+    "nome": "Alface",
+    "preco": 3,
+    "produtor": "Alberto",
+    "tags": [ "Vegetal" ]
+  },
+  {
+    "nome": "Maçã",
+    "preco": 2,
+    "produtor": "Alberto",
+    "tags": [ "Fruta" ]
+  }
+]
