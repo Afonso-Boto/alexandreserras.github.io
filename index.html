@@ -103,18 +103,19 @@
 
         <!-- Lista de produtos -->
         <div class="row mx-2">
-            <!-- foreach do KO aqui-->
+            <!-- ko foreach: displayList -->
             <div class="col-md-6 col-lg-4 mt-3">
-                <div class="card px-2">
-                    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+                <div class="card">
+                    <img class="card-img-top" data-bind="attr: { src: imageURL, alt: nome}">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <h5 class="card-title" data-bind="text: nome"></h5>
+                        <h6 class="card-title">Produtor: <span data-bind="text: produtor"></span></h6>
+                        <p class="card-text" data-bind="text: descricao"></p>
                         <a href="#" class="btn btn-success">Ver produto</a>
                     </div>
                 </div>
             </div>
-            <!-- fim do foreach -->
+            <!-- /ko -->
             <!-- cards adicionais para exemplificar, apagar depois -->
             <div class="col-md-6 col-lg-4 mt-3">
                 <div class="card px-2">
