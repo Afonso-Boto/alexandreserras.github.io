@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var produtos = [];
-    var tags = ;
+    var tags = new Set();
 
     var json = '[{"nome": "Alface", "preco": 3, "produtor": "Alberto", "tags": ["Vegetal"], "imageURL": "https://extension.umd.edu/sites/extension.umd.edu/files/resize/_images/programs/hgic/Food/salad-4267063_640-600x399.jpg", "descricao": "ummm não sei o que por aqui"},' +
         '{"nome": "Maçã", "preco": 2, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "https://images2.minutemediacdn.com/image/upload/c_fill,g_auto,h_1248,w_2220/v1555925874/shape/mentalfloss/640title_0.jpg", "descricao": "ummm não sei o que por aqui" },' +
