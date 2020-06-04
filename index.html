@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CityFarm</title> <!-- isto deverá ser um data-bind com o termo de pesquisa -->
+    <title>CityFarm</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/all.min.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -11,7 +11,7 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand navbar-dark bg-green fixed-top">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="index.html">
             <span class="fa-stack mr-2">
                 <i class="fa fa-building fa-stack-2x pb-1"></i>
                 <i class="fa fa-circle fa-stack-1x text-light-green h2 logo"></i>
@@ -57,49 +57,42 @@
     </nav>
     
     <!-- Banner -->
-    <div class="jumbotron">
+    <div id="banner" class="jumbotron">
         <!-- Search -->
         <div class="d-sm-flex justify-content-center align-items-center w-75 mx-auto">
-            <input class="form-control mr-sm-2 col-12 col-sm-9" type="search" placeholder="Do que está à procura?" aria-label="Search">
-            <button class="btn btn-success my-2 my-sm-0 col-12 col-sm-3" type="submit">Search</button>
+            <input id="search" class="form-control mr-sm-2 col-12 col-sm-9" type="search" placeholder="Do que está à procura?" aria-label="Search">
+            <button id="searchButton" class="btn btn-success my-2 my-sm-0 col-12 col-sm-3" type="submit">Search</button>
         </div>
     </div>
 
     <!-- Conteúdo -->
-    <div class="container">
+    <div id="content" class="container">
         <div class="row mt-5">
             <!-- mudar para um data-bind depois -->
-            <h1 class="col-md-12 col-lg-7">
+            <h1 id="listHeader" class="col-md-12 col-lg-7">
                 Produtos Populares
             </h1>
             <div class="col-md-12 col-lg-5 d-inline-flex flex-row-reverse align-items-center">
                 <!-- dropdown do filtro -->
-                <select class="ml-2 form-control">
-                    <option>Todas as categorias</option>
-                    <!-- foreach do KO aqui? -->
-                    <option>Um tag</option>
-                    <!-- fim do foreach? -->
+                <select class="ml-2 form-control" id="tagSelect">
+                    <option value="all">Todas as categorias</option>
+                    <!-- ko foreach: tagList -->
+                    <option data-bind="text: $data, attr: {value: $data}"></option>
+                    <!-- /ko -->
                 </select>
-                <!-- 
-                <div class="ml-2">
-                    <button class="btn btn-success dropdown-toggle" href="#" id="filterDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="filterDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </div>
-                -->
-                <!-- if do KO aqui-->
+
+                <!-- botão para limpar pesquisa -->
                 <div>
-                    <button class="btn btn-success">Limpar resultados</button>
+                    <button id="clean" class="btn btn-success" style="display: none">Limpar resultados</button>
                 </div>
-                <!-- fim do if -->
             </div>
         </div>
+
+        <!-- ko if: displayList().length == 0 -->
+        <div class="row mt-5">
+            <h3 class="mx-auto">Sem resultados para "<span data-bind="text: searchTerm"></span>"</h3>
+        </div>
+        <!-- /ko -->
 
         <!-- Lista de produtos -->
         <div class="row mx-2">
@@ -108,7 +101,8 @@
                 <div class="card">
                     <img class="card-img-top" data-bind="attr: { src: imageURL, alt: nome}">
                     <div class="card-body">
-                        <h5 class="card-title" data-bind="text: nome"></h5>
+                        <h4 class="card-title" data-bind="text: nome"></h4>
+                        <h4 class="card-title"><span class="text-danger" data-bind="text: preco + '€'"></span> por [porção]</h4>
                         <h6 class="card-title">Produtor: <span data-bind="text: produtor"></span></h6>
                         <p class="card-text" data-bind="text: descricao"></p>
                         <a href="#" class="btn btn-success">Ver produto</a>
@@ -116,38 +110,6 @@
                 </div>
             </div>
             <!-- /ko -->
-            <!-- cards adicionais para exemplificar, apagar depois -->
-            <div class="col-md-6 col-lg-4 mt-3">
-                <div class="card px-2">
-                    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-success">Ver produto</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mt-3">
-                <div class="card px-2">
-                    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-success">Ver produto</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mt-3">
-                <div class="card px-2">
-                    <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-success">Ver produto</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -156,7 +118,7 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Voltar ao topo<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#banner">Voltar ao topo<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
         </div>
@@ -164,7 +126,6 @@
 
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/knockout-3.5.1.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="js/classes.js"></script>
