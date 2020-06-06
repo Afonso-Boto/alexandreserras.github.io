@@ -4,7 +4,16 @@ $(document).ready(function () {
 		displayList: ko.observableArray(),
 		tagList: ko.observableArray(),
 		displayName: ko.observable("CityFarm"),
-		searchTerm: ko.observable("")
+		searchTerm: ko.observable(""),
+		displayCarr: ko.observableArray(),
+
+		precoTotal: ko.pureComputed(function () {
+			var t = 0;
+			viewModel.displayCarr().forEach(function (p) {
+				t += p.preco * p.quantidade;
+			});
+			return t
+		})
 	}
 
 	// json com a informação dos produtos (nome, preço, produtor, tags, URL da imagem, descrição)
@@ -16,11 +25,15 @@ $(document).ready(function () {
 	var parsed = JSON.parse(json);
 
 	// lista de todos os produtos disponíveis
+	var produtoAtual;
+	var produtoSelect;
 	var produtos = [];
 	// adicionar produtos lidos do json à lista de produtos como objetos da classe Produto
 	// ao mesmo tempo determina-se todos os tags diferentes que existem
 	for (p in parsed) {
-		produtos.push(new Produto(parsed[p].nome, parsed[p].preco, parsed[p].produtor, parsed[p].tags, parsed[p].imageURL, parsed[p].descricao));
+		prod = new Produto(parsed[p].nome, parsed[p].preco, parsed[p].produtor, parsed[p].tags, parsed[p].imageURL, parsed[p].descricao);
+		prod.quantidade = Math.floor(Math.random() * 200) + 50;
+		produtos.push(prod);
 		parsed[p].tags.forEach(function (t) {
 			if (!viewModel.tagList().includes(t))
 				viewModel.tagList.push(t);
@@ -98,16 +111,29 @@ $(document).ready(function () {
 	ShowProduto = function (produto) {
 		console.log("Show Produto:");
 
+		produtoAtual = new Produto(produto._nome, produto._preco, produto._produtor, produto._tags, produto._imageURL, produto._descricao);
+		produtoSelect = produto;
+
 		$("#imgProduto").attr("src", produto._imageURL);
 
-		document.getElementById("exampleModalLongTitle").innerHTML = produto._nome;
+		$("#exampleModalLongTitle").html(produto._nome);
 
-		document.getElementById("vmProdutoProdutor").innerHTML = "Produtor: " + produto._produtor;
-		document.getElementById("vmProdutoDescricao").innerHTML = "Descrição: " + produto._descricao;
+		$("#vmProdutoProdutor").html("Produtor: " + produto._produtor);
+		$("#vmProdutoDescricao").html("Descrição: " + produto._descricao);
 
-		document.getElementById("vmProdutoQuantidade").innerHTML = "Quantidade: " + produto._quantidade;
-		document.getElementById("vmProdutoPreco").innerHTML = "Preço: " + produto._preco + "€";
+		$("#vmProdutoQuantidade").html("Quantidade: " + produto._quantidade);
+		$("#vmProdutoPreco").html("Preço: " + produto._preco + "€");
+
+		$("#inputQuantidade").attr("max", produto._quantidade);
 	}
+
+	$("#addCarr").on("click", function () {
+		//If para numeros inputs negativos!!! -1 add a quant e ao carr
+		produtoAtual.quantidade = $("#inputQuantidade").val();
+		produtoSelect.quantidade -= produtoAtual._quantidade;
+
+		viewModel.displayCarr.push(produtoAtual);
+	});	
 
 	ko.applyBindings(viewModel);
 });
