@@ -56,7 +56,7 @@
             </ul>
         </div>
     </nav>
-    
+
 
     <!-- Banner -->
     <div id="banner" class="jumbotron">
@@ -95,7 +95,6 @@
             <h3 class="mx-auto">Sem resultados para "<span data-bind="text: searchTerm"></span>"</h3>
         </div>
         <!-- /ko -->
-
         <!-- Lista de produtos -->
         <div class="row mx-2">
             <!-- ko foreach: displayList -->
@@ -107,11 +106,43 @@
                         <h4 class="card-title"><span class="text-danger" data-bind="text: preco + '€'"></span> por [porção]</h4>
                         <h6 class="card-title">Produtor: <span data-bind="text: produtor"></span></h6>
                         <p class="card-text" data-bind="text: descricao"></p>
-                        <a href="#" class="btn btn-success">Ver produto</a>
+                        <a class="btn btn-success" data-bind="click: ShowProduto"
+                           data-toggle="modal"
+                           data-target="#exampleModalCenter"><i style="color: white;">Ver produto</i></a>
                     </div>
                 </div>
             </div>
             <!-- /ko -->
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="column left">
+                            <img id="imgProduto" src="" />
+                        </div>
+                        <div class="column right">
+                            <p id="vmProdutoNome"></p>
+                            <p id="vmProdutoProdutor"></p>
+                            <p id="vmProdutoDescricao"></p>
+                            <br />
+                            <p id="vmProdutoQuantidade"></p>
+                            <p id="vmProdutoPreco"></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
