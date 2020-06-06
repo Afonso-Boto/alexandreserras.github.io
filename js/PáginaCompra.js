@@ -4,9 +4,18 @@
         displayList: ko.observableArray(),
         tagList: ko.observableArray(),
         displayName: ko.observable("CityFarm"),
-        searchTerm: ko.observable("")
+        searchTerm: ko.observable(""),
+        removeProduto : function (produto) {
+            viewModel.displayList.remove(produto);
+        },
+        precoTotal: ko.pureComputed(function () {
+            var t = 0;
+            viewModel.displayList().forEach(function (p) {
+                t += p.preco * p.quantidade;
+            });
+           return t
+        })
     }
-
     // json com a informação dos produtos (nome, preço, produtor, tags, URL da imagem, descrição)
     var json = '[{"nome": "Alface", "preco": 3, "produtor": "Alberto", "tags": ["Vegetal"], "imageURL": "https://extension.umd.edu/sites/extension.umd.edu/files/resize/_images/programs/hgic/Food/salad-4267063_640-600x399.jpg", "descricao": "A alface possui baixo teor calórico, já que cada a 100 g dela contém somente 15 calorias. A folha contém vitamina A, vitamina C , minerais como cálcio, fósforo e ferro. "},' +
         '{"nome": "Maçã", "preco": 2, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "https://images2.minutemediacdn.com/image/upload/c_fill,g_auto,h_1248,w_2220/v1555925874/shape/mentalfloss/640title_0.jpg", "descricao": "A maçã possui um excelente valor nutritivo, pois na sua casca encontra-se a pectina que ajuda a reduzir o colesterol do sangue. Além disso, é um fruto rico em vitaminas B1, B2,  ferro e fósforo." },' +
@@ -37,113 +46,9 @@
             if (!viewModel.tagList().includes(t))
                 viewModel.tagList.push(t);
         });
+        
     }
-
-    console.log(produtos);
-    //console.log(viewModel.tagList());
-
-    // inicialização da lista de produtos exibida
+    
     viewModel.displayList(produtos);
-
-    // lista dos produtos que correspondem à pesquisa
-    var searchResults = produtos;
-
-    // pesquisar ao premir Enter no campo de pesquisa
-    $("#search").keydown(function () {
-        if (event.which == 13) {
-            // fazer a pesquisa
-            search(this.value);
-        }
-    });
-    // pesquisar ao clicar no botão de pesquisa
-    $("#searchButton").click(function () {
-        // fazer a pesquisa
-        search($("#search").val());
-    });
-
-    // limpar pesquisa
-    $("#clean").click(function () {
-        // a limpeza da pesquisa é feita pela pesquisa com o termo "", que dá match a todos os produtos
-        search("");
-    });
-
-    // função encargue da pesquisa
-    search = function (termo) {
-        searchResults = produtos.filter(function (p) { return p.nome.toLowerCase().includes(termo.toLowerCase()) });
-        viewModel.searchTerm(termo);
-        if (termo == "") {
-            $("#listHeader").text("Produtos Populares");
-            $("title").html("CityFarm");
-            $("#clean").hide();
-        }
-        else {
-            $("#listHeader").text("Resultados:");
-            $("title").html("CityFarm - " + termo);
-            $("#clean").show();
-        }
-        // reiniciar filtro
-        $("#tagSelect").val("all");
-        filterByTag();
-    }
-
-
-    // Filtrar os resultados atuais ao selecionar um tag
-    $("#tagSelect").on('change', function () {
-        filterByTag()
-    });
-
-    // função encargue de filtrar os produtos por tag
-    filterByTag = function () {
-        var tag = $("#tagSelect").val();
-        // sem filtro, mostrar todos os produtos
-        if (tag == "all")
-            viewModel.displayList(searchResults);
-        // com filtro, mostrar apenas os que correspondem à tag
-        else {
-            var filtered = searchResults.filter(function (p) {
-                return p.tags.includes(tag);
-            });
-            viewModel.displayList(filtered);
-        }
-    }
-
     ko.applyBindings(viewModel);
 });
-
-// Função para Smooth Scrolling
-// Todos os links com #
-$('a[href*="#"]')
-    // Remover links que não vão a lado nenhum
-    .not('[href="#"]')
-    .not('[href="#0"]')
-    .click(function (event) {
-        // Links na mesma página
-        if (
-            location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
-            &&
-            location.hostname == this.hostname
-        ) {
-            // Ver que elemento vai ser o alvo
-            var target = $(this.hash);
-            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-            // Existe alvo para o scroll?
-            if (target.length) {
-                // Only prevent default if animation is actually gonna happen
-                event.preventDefault();
-                $('html, body').animate({
-                    scrollTop: target.offset().top
-                }, 1000, function () {
-                    // Callback depois da animação
-                    // Mudar o foco
-                    var $target = $(target);
-                    $target.focus();
-                    if ($target.is(":focus")) { // Verificar se o alvo está focado
-                        return false;
-                    } else {
-                        $target.attr('tabindex', '-1'); // Tabindex para elementos não focáveis
-                        $target.focus(); // Definir foco outra vez
-                    };
-                });
-            }
-        }
-    });
