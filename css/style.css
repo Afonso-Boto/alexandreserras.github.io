@@ -30,29 +30,10 @@ div.container {
 }
 
 /*View model Produto CSS*/
-.column {
-    float: left;
-    padding: 10px;
-    height: auto;
-}
-
-.left {
-    width: 40%;
-}
-
-.right {
-    width: 60%;
-}
 
 #imgProduto {
     height: auto;
     width: 100%;
     margin: auto;
     border-radius: 0;
-}
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
 }

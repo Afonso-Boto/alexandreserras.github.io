@@ -96,8 +96,7 @@ $(document).ready(function () {
 	}
 
 	ShowProduto = function (produto) {
-		console.log("Show Produto:")
-		console.log(produto._imageURL);
+		console.log("Show Produto:");
 
 		$("#imgProduto").attr("src", produto._imageURL);
 
