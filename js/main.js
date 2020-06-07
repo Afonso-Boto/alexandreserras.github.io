@@ -1,52 +1,65 @@
 
-ï»¿$(document).ready(function () {
-    // viewModel - contÃ©m os dataBinds realizados na pÃ¡gina
+$(document).ready(function () {
+    // viewModel - contém os dataBinds realizados na página
     var viewModel = {
         displayList: ko.observableArray(),
         tagList: ko.observableArray(),
         displayName: ko.observable("CityFarm"),
-        searchTerm: ko.observable("")
+        searchTerm: ko.observable(""),
+        displayCarr: ko.observableArray(),
+
+        precoTotal: ko.pureComputed(function () {
+            var t = 0;
+            viewModel.displayCarr().forEach(function (p) {
+                t += p.preco * p.quantidade;
+            });
+            return t
+        })
     }
 
-    // json com a informaÃ§Ã£o dos produtos (nome, preÃ§o, produtor, tags, URL da imagem, descriÃ§Ã£o)
-    var json = '[{"nome": "Alface", "preco": 3, "produtor": "Alberto", "tags": ["Vegetal"], "imageURL": "https://extension.umd.edu/sites/extension.umd.edu/files/resize/_images/programs/hgic/Food/salad-4267063_640-600x399.jpg", "descricao": "A alface possui baixo teor calÃ³rico, jÃ¡ que cada a 100 g dela contÃ©m somente 15 calorias. A folha contÃ©m vitamina A, vitamina C , minerais como cÃ¡lcio, fÃ³sforo e ferro. "},' +
-        '{"nome": "MaÃ§Ã£", "preco": 2, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "https://images2.minutemediacdn.com/image/upload/c_fill,g_auto,h_1248,w_2220/v1555925874/shape/mentalfloss/640title_0.jpg", "descricao": "A maÃ§Ã£ possui um excelente valor nutritivo, pois na sua casca encontra-se a pectina que ajuda a reduzir o colesterol do sangue. AlÃ©m disso, Ã© um fruto rico em vitaminas B1, B2,  ferro e fÃ³sforo." },' +
-        '{"nome": "BrÃ³culo","preco": 1.5, "produtor": "JosÃ©", "tags": ["Vegetal"], "imageURL": "https://www.earthboundfarm.com/wp-content/uploads/2020/01/EBF_BroccoliFloretsBag-020-2.png", "descricao": "Os brÃ³culos Ã© uma planta crucÃ­fera que pertence Ã  famÃ­lia Brassicaceae. Este vegetal, alÃ©m de possuir poucas calorias (25 calorias em 100 gramas), Ã© cientificamente conhecido por possuir altas concentraÃ§Ãµes de sulforafanos. "}, ' +
-        '{"nome":"Morango", "preco": 2, "produtor": "JosÃ©","tags": ["Fruta"],"imageURL":"https://zap.aeiou.pt/wp-content/uploads/2020/04/e5aa2c59b0edc669c43274b9c8f641da-783x450.jpg", "descricao": "Tem poucas calorias, e Ã© uma excelente fonte de vitamina C e potÃ¡ssio, alÃ©m de possuir muitas fibras e poder prevenir certos tipos de cancro."}, ' +
-        '{"nome": "Pera", "preco": 1.75, "produtor": "Joana", "tags": ["Fruta"], "imageURL": "https://www.intermarche.pt/media/58926/pera-rocha-02.jpg", "descricao": "Ã‰ rica em sais minerais como, por exemplo, sÃ³dio, potÃ¡ssio, ferro, magnÃ©sio e cÃ¡lcio." }, ' +
-        '{"nome": "Cenoura", "preco": 1.65, "produtor": "Joana", "tags": ["Vegetal"], "imageURL": "https://www.greenme.com.br/wp-content/uploads/2015/07/cenouras-beneficios-1200x621.jpg", "descricao": "Pode ser consumida crua ou cozida, em saladas, purÃª,  sumo, sopas e refogados. Cada 100g de cenoura contÃ©m, em mÃ©dia, 51 calorias." }, ' +
-        '{"nome": "Tomate", "preco": 1.25, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSX1JUVxmxIZYM1URrRZQQTCDoPPGm_ZaXFkLEB291-nrxb7RtI&usqp=CAU", "descricao": "O tomate Ã© uma fruta, apesar de normalmente ser usado como legume em saladas e pratos quentes. Ã‰ um ingrediente muito utilizado em dietas de emagrecimento porque cada tomate tem apenas 25 calorias, e tem propriedades diurÃ©ticas, alÃ©m de muita Ã¡gua e vitamina C que melhora o sistema imune e a absorÃ§Ã£o do ferro nas refeiÃ§Ãµes." }, ' +
-        '{"nome": "PÃªssego", "preco": 2.5, "produtor": "JosÃ©", "tags": ["Fruta"], "imageURL": "https://1.bp.blogspot.com/-3hmrYnf7tg8/Txgfb6P4WHI/AAAAAAAAEbo/TlsY5Ty_Mtg/s1600/pessego.jpg", "descricao": "O pÃªssego pode ser classificado em dois grupos: o de polpa amarela e o de polpa branca, cada um tendo as variedades de caroÃ§o solto e caroÃ§o aderente. Assim sendo, o pÃªssego, dependendo da variedade, pode ter forma redonda ou oval, casca com pilosidade, de cor que varia entre amarelo e o vermelho. A polpa Ã© suculenta, agridoce, aromÃ¡tica e de cor amarela, branca ou avermelhada" }, ' +
-        '{"nome": "Alho-FrancÃªs", "preco": 1.89, "produtor": "JosÃ©", "tags": ["Vegetal"], "imageURL": "https://i0.wp.com/revistajardins.pt/wp-content/uploads/2018/01/ThinkstockPhotos-636978920.jpg?fit=1080%2C670&ssl=1" , "descricao": "Com um sabor caracterÃ­stico, que faz lembrar as chalotas, mas mais doce e subtil, o alho francÃªs e a cebola substituem-se quando nÃ£o hÃ¡ colheita de alho francÃªs (de maio a agosto), hÃ¡ colheita da cebola (de junho a setembro) e vice-versa."},' +
-        '{"nome": "AbÃ³bora", "preco": 1, "produtor": "Joana", "tags": ["Fruta"], "imageURL": "https://lh3.googleusercontent.com/proxy/JZUEVVC3nXIGp0XA_RcSfSVR8esxHqyKxoaCksVibxZCRkjQJ_MM5gSW2ZTcgR5GOcJgvCV8TuVN76vdcE5yTPbTuaZM7xtyIvFkhFUEgBCjH0mA-_qZfFNrjGGF4akgSEyY1wHlNiceM_0pJ4frzmHRt5JQfA", "descricao": "A abÃ³bora, tambÃ©m conhecida como jerimum, Ã© um legume muito utilizado em preparaÃ§Ãµes culinÃ¡rias que traz como principal vantagem ter pouco carboidrato e poucas calorias, ajudando a emagrecer e controlar o peso. Assim, tanto a abÃ³bora cabotian quanto a abÃ³bora moranga sÃ£o Ã³timas aliadas da dieta e nÃ£o engordam." }, ' +
-        '{"nome": "Kiwi", "preco": 3, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "https://cdn-cv.r4you.co/wp-content/uploads/2018/11/iStock-1056258314.jpg", "descricao": "Fonte de fibras e de proteÃ­nas, o kiwi tem um valor nutricional gigantesco, alÃ©m de ser uma fruta com baixas calorias, a torna eficaz tambÃ©m para as pessoas que desejam perder peso. Outra vantagem desse alimento Ã© que ele Ã© naturamente orgÃ¢nico e estÃ¡ na lista dos frutos que mais resistem a muitos dos resÃ­duos de pesticidas." }, ' +
-        '{"nome": "Pimento-Vermelho", "preco": 2.1, "produtor": "Joana", "tags": ["Vegetal"], "imageURL": "https://media.continente.pt/Sonae.eGlobal.Presentation.Web.Media/media.axd?resourceSearchType=2&resource=ProductId=2076826(eCsf$RetekProductCatalog$MegastoreContinenteOnline$Continente)&siteId=1&channelId=1&width=512&height=512&defaultOptions=1", "descricao": "Estes fazem parte da cultura gastronÃ³mica nacional e o seu consumo pode trazer diversos benefÃ­cios para a saÃºde, nomeadamente na proteÃ§Ã£o contra doenÃ§as cardiovasculares e cancro, graÃ§as ao seu poder antioxidante, relacionado com a sua elevada concentraÃ§Ã£o de vitamina C e carotenos. O pimento Ã© igualmente rico em vitamina A, vitamina B6, fitoquÃ­micos, fibra e potÃ¡ssio." }, ' +
-        '{"nome": "Melancia", "preco": 1, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "https://bonfruto.com.br/wp-content/uploads/2020/03/022550_Ampliada.jpg", "descricao": " Mas os benefÃ­cios da melancia nÃ£o sÃ£o apenas sabor e hidrataÃ§Ã£o. Com apenas 46 calorias por 100 gramas a melancia Ã© rica em vitamina C, vitamina A, licopeno, entre outros compostos que proporcionam benefÃ­cios para a saÃºde " }, ' +
-        '{"nome": "LimÃ£o", "preco": 2, "produtor": "Joana", "tags": ["Fruta"], "imageURL": "https://lh3.googleusercontent.com/proxy/KiU_leemVEi9MpvIja9K4RNj453ImIHTXctbQnmH_MGEBvHoDblEFb5jpH2-AOo2aGQEn0Gs0U6n0-qKwbdTI4Vy5T2vQarr6abVkBfI5fjA3aLyB6gatZ04tMpC5FeS6MrFmwPK", "descricao": " O limÃ£o Ã© um fruto rico em vitamina C e em 100 gramas possui, apenas, 26 calorias. SÃ£o muitos os proveitos resultantes do seu consumo, que podem ser obtidos atravÃ©s do sumo, da polpa ou das raspas da casca, rica em Ã³leos essenciais. " }, ' +
-        '{"nome": "Laranja", "preco": 1.99, "produtor": "JosÃ©", "tags": ["Fruta"], "imageURL": "https://www.ativosaude.com/uploads/2018/07/17091948/pe-de-laranja.jpg", "descricao": " A sua doÃ§ura natural e a variedade das utilizaÃ§Ãµes, ao natural, em sumo ou em compotas, contribuÃ­ram para a sua diversificaÃ§Ã£o. Fique a conhecer a sua composiÃ§Ã£o nutricional, benefÃ­cios para a saÃºde e conselhos de consumo das laranjas. "}]';
+    // json com a informação dos produtos (nome, preço, produtor, tags, URL da imagem, descrição)
+    var json = '[{"nome": "Alface", "preco": 3, "produtor": "Alberto", "tags": ["Vegetal"], "imageURL": "https://extension.umd.edu/sites/extension.umd.edu/files/resize/_images/programs/hgic/Food/salad-4267063_640-600x399.jpg", "descricao": "A alface possui baixo teor calórico, já que cada a 100 g dela contém somente 15 calorias. A folha contém vitamina A, vitamina C , minerais como cálcio, fósforo e ferro. "},' +
+        '{"nome": "Maçã", "preco": 2, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "https://images2.minutemediacdn.com/image/upload/c_fill,g_auto,h_1248,w_2220/v1555925874/shape/mentalfloss/640title_0.jpg", "descricao": "A maçã possui um excelente valor nutritivo, pois na sua casca encontra-se a pectina que ajuda a reduzir o colesterol do sangue. Além disso, é um fruto rico em vitaminas B1, B2,  ferro e fósforo." },' +
+        '{"nome": "Bróculo","preco": 1.5, "produtor": "José", "tags": ["Vegetal"], "imageURL": "https://www.earthboundfarm.com/wp-content/uploads/2020/01/EBF_BroccoliFloretsBag-020-2.png", "descricao": "Os bróculos é uma planta crucífera que pertence à família Brassicaceae. Este vegetal, além de possuir poucas calorias (25 calorias em 100 gramas), é cientificamente conhecido por possuir altas concentrações de sulforafanos. "}, ' +
+        '{"nome":"Morango", "preco": 2, "produtor": "José","tags": ["Fruta"],"imageURL":"https://zap.aeiou.pt/wp-content/uploads/2020/04/e5aa2c59b0edc669c43274b9c8f641da-783x450.jpg", "descricao": "Tem poucas calorias, e é uma excelente fonte de vitamina C e potássio, além de possuir muitas fibras e poder prevenir certos tipos de cancro."}, ' +
+        '{"nome": "Pera", "preco": 1.75, "produtor": "Joana", "tags": ["Fruta"], "imageURL": "https://www.intermarche.pt/media/58926/pera-rocha-02.jpg", "descricao": "É rica em sais minerais como, por exemplo, sódio, potássio, ferro, magnésio e cálcio." }, ' +
+        '{"nome": "Cenoura", "preco": 1.65, "produtor": "Joana", "tags": ["Vegetal"], "imageURL": "https://www.greenme.com.br/wp-content/uploads/2015/07/cenouras-beneficios-1200x621.jpg", "descricao": "Pode ser consumida crua ou cozida, em saladas, purê,  sumo, sopas e refogados. Cada 100g de cenoura contém, em média, 51 calorias." }, ' +
+        '{"nome": "Tomate", "preco": 1.25, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSX1JUVxmxIZYM1URrRZQQTCDoPPGm_ZaXFkLEB291-nrxb7RtI&usqp=CAU", "descricao": "O tomate é uma fruta, apesar de normalmente ser usado como legume em saladas e pratos quentes. É um ingrediente muito utilizado em dietas de emagrecimento porque cada tomate tem apenas 25 calorias, e tem propriedades diuréticas, além de muita água e vitamina C que melhora o sistema imune e a absorção do ferro nas refeições." }, ' +
+        '{"nome": "Pêssego", "preco": 2.5, "produtor": "José", "tags": ["Fruta"], "imageURL": "https://1.bp.blogspot.com/-3hmrYnf7tg8/Txgfb6P4WHI/AAAAAAAAEbo/TlsY5Ty_Mtg/s1600/pessego.jpg", "descricao": "O pêssego pode ser classificado em dois grupos: o de polpa amarela e o de polpa branca, cada um tendo as variedades de caroço solto e caroço aderente. Assim sendo, o pêssego, dependendo da variedade, pode ter forma redonda ou oval, casca com pilosidade, de cor que varia entre amarelo e o vermelho. A polpa é suculenta, agridoce, aromática e de cor amarela, branca ou avermelhada" }, ' +
+        '{"nome": "Alho-Francês", "preco": 1.89, "produtor": "José", "tags": ["Vegetal"], "imageURL": "https://i0.wp.com/revistajardins.pt/wp-content/uploads/2018/01/ThinkstockPhotos-636978920.jpg?fit=1080%2C670&ssl=1" , "descricao": "Com um sabor característico, que faz lembrar as chalotas, mas mais doce e subtil, o alho francês e a cebola substituem-se quando não há colheita de alho francês (de maio a agosto), há colheita da cebola (de junho a setembro) e vice-versa."},' +
+        '{"nome": "Abóbora", "preco": 1, "produtor": "Joana", "tags": ["Fruta"], "imageURL": "https://lh3.googleusercontent.com/proxy/JZUEVVC3nXIGp0XA_RcSfSVR8esxHqyKxoaCksVibxZCRkjQJ_MM5gSW2ZTcgR5GOcJgvCV8TuVN76vdcE5yTPbTuaZM7xtyIvFkhFUEgBCjH0mA-_qZfFNrjGGF4akgSEyY1wHlNiceM_0pJ4frzmHRt5JQfA", "descricao": "A abóbora, também conhecida como jerimum, é um legume muito utilizado em preparações culinárias que traz como principal vantagem ter pouco carboidrato e poucas calorias, ajudando a emagrecer e controlar o peso. Assim, tanto a abóbora cabotian quanto a abóbora moranga são ótimas aliadas da dieta e não engordam." }, ' +
+        '{"nome": "Kiwi", "preco": 3, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "https://cdn-cv.r4you.co/wp-content/uploads/2018/11/iStock-1056258314.jpg", "descricao": "Fonte de fibras e de proteínas, o kiwi tem um valor nutricional gigantesco, além de ser uma fruta com baixas calorias, a torna eficaz também para as pessoas que desejam perder peso. Outra vantagem desse alimento é que ele é naturamente orgânico e está na lista dos frutos que mais resistem a muitos dos resíduos de pesticidas." }, ' +
+        '{"nome": "Pimento-Vermelho", "preco": 2.1, "produtor": "Joana", "tags": ["Vegetal"], "imageURL": "https://media.continente.pt/Sonae.eGlobal.Presentation.Web.Media/media.axd?resourceSearchType=2&resource=ProductId=2076826(eCsf$RetekProductCatalog$MegastoreContinenteOnline$Continente)&siteId=1&channelId=1&width=512&height=512&defaultOptions=1", "descricao": "Estes fazem parte da cultura gastronómica nacional e o seu consumo pode trazer diversos benefícios para a saúde, nomeadamente na proteção contra doenças cardiovasculares e cancro, graças ao seu poder antioxidante, relacionado com a sua elevada concentração de vitamina C e carotenos. O pimento é igualmente rico em vitamina A, vitamina B6, fitoquímicos, fibra e potássio." }, ' +
+        '{"nome": "Melancia", "preco": 1, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "https://bonfruto.com.br/wp-content/uploads/2020/03/022550_Ampliada.jpg", "descricao": " Mas os benefícios da melancia não são apenas sabor e hidratação. Com apenas 46 calorias por 100 gramas a melancia é rica em vitamina C, vitamina A, licopeno, entre outros compostos que proporcionam benefícios para a saúde " }, ' +
+        '{"nome": "Limão", "preco": 2, "produtor": "Joana", "tags": ["Fruta"], "imageURL": "https://lh3.googleusercontent.com/proxy/KiU_leemVEi9MpvIja9K4RNj453ImIHTXctbQnmH_MGEBvHoDblEFb5jpH2-AOo2aGQEn0Gs0U6n0-qKwbdTI4Vy5T2vQarr6abVkBfI5fjA3aLyB6gatZ04tMpC5FeS6MrFmwPK", "descricao": " O limão é um fruto rico em vitamina C e em 100 gramas possui, apenas, 26 calorias. São muitos os proveitos resultantes do seu consumo, que podem ser obtidos através do sumo, da polpa ou das raspas da casca, rica em óleos essenciais. " }, ' +
+        '{"nome": "Laranja", "preco": 1.99, "produtor": "José", "tags": ["Fruta"], "imageURL": "https://www.ativosaude.com/uploads/2018/07/17091948/pe-de-laranja.jpg", "descricao": " A sua doçura natural e a variedade das utilizações, ao natural, em sumo ou em compotas, contribuíram para a sua diversificação. Fique a conhecer a sua composição nutricional, benefícios para a saúde e conselhos de consumo das laranjas. "}]';
 
     // leitura inicial do json
     var parsed = JSON.parse(json);
 
-    // lista de todos os produtos disponÃ­veis
+    // lista de todos os produtos disponíveis
+    var produtoAtual;
+    var produtoSelect;
     var produtos = [];
-    // adicionar produtos lidos do json Ã  lista de produtos como objetos da classe Produto
+    // adicionar produtos lidos do json à lista de produtos como objetos da classe Produto
     // ao mesmo tempo determina-se todos os tags diferentes que existem
     for (p in parsed) {
-        produtos.push(new Produto(parsed[p].nome, parsed[p].preco, parsed[p].produtor, parsed[p].tags, parsed[p].imageURL, parsed[p].descricao));
+        prod = new Produto(parsed[p].nome, parsed[p].preco, parsed[p].produtor, parsed[p].tags, parsed[p].imageURL, parsed[p].descricao);
+        prod.quantidade = Math.floor(Math.random() * 200) + 50;
+        produtos.push(prod);
         parsed[p].tags.forEach(function (t) {
             if (!viewModel.tagList().includes(t))
                 viewModel.tagList.push(t);
         });
     }
 
-    console.log(produtos);
+    //console.log(produtos);
     //console.log(viewModel.tagList());
 
-    // inicializaÃ§Ã£o da lista de produtos exibida
+    // inicialização da lista de produtos exibida
     viewModel.displayList(produtos);
 
-    // lista dos produtos que correspondem Ã  pesquisa
+    // lista dos produtos que correspondem à pesquisa
     var searchResults = produtos;
 
     // pesquisar ao premir Enter no campo de pesquisa
@@ -56,7 +69,7 @@
             search(this.value);
         }
     });
-    // pesquisar ao clicar no botÃ£o de pesquisa
+    // pesquisar ao clicar no botão de pesquisa
     $("#searchButton").click(function () {
         // fazer a pesquisa
         search($("#search").val());
@@ -64,11 +77,11 @@
 
     // limpar pesquisa
     $("#clean").click(function () {
-        // a limpeza da pesquisa Ã© feita pela pesquisa com o termo "", que dÃ¡ match a todos os produtos
+        // a limpeza da pesquisa é feita pela pesquisa com o termo "", que dá match a todos os produtos
         search("");
     });
 
-    // funÃ§Ã£o encargue da pesquisa
+    // função encargue da pesquisa
     search = function (termo) {
         searchResults = produtos.filter(function (p) { return p.nome.toLowerCase().includes(termo.toLowerCase()) });
         viewModel.searchTerm(termo);
@@ -93,13 +106,13 @@
         filterByTag()
     });
 
-    // funÃ§Ã£o encargue de filtrar os produtos por tag
+    // função encargue de filtrar os produtos por tag
     filterByTag = function () {
         var tag = $("#tagSelect").val();
         // sem filtro, mostrar todos os produtos
         if (tag == "all")
             viewModel.displayList(searchResults);
-        // com filtro, mostrar apenas os que correspondem Ã  tag
+        // com filtro, mostrar apenas os que correspondem à tag
         else {
             var filtered = searchResults.filter(function (p) {
                 return p.tags.includes(tag);
@@ -108,18 +121,45 @@
         }
     }
 
+    ShowProduto = function (produto) {
+        console.log("Show Produto:");
+
+        produtoAtual = new Produto(produto._nome, produto._preco, produto._produtor, produto._tags, produto._imageURL, produto._descricao);
+        produtoSelect = produto;
+
+        $("#imgProduto").attr("src", produto._imageURL);
+
+        $("#exampleModalLongTitle").html(produto._nome);
+
+        $("#vmProdutoProdutor").html("Produtor: " + produto._produtor);
+        $("#vmProdutoDescricao").html("Descrição: " + produto._descricao);
+
+        $("#vmProdutoQuantidade").html("Quantidade: " + produto._quantidade);
+        $("#vmProdutoPreco").html("Preço: " + produto._preco + "€");
+
+        $("#inputQuantidade").attr("max", produto._quantidade);
+    }
+
+    $("#addCarr").on("click", function () {
+        produtoAtual.quantidade = $("#inputQuantidade").val();
+        if (produtoAtual.quantidade > 0 && produtoAtual.quantidade <= produtoSelect._quantidade) {
+            produtoSelect.quantidade -= produtoAtual._quantidade;
+            viewModel.displayCarr.push(produtoAtual);
+        }
+
+    });
+
     ko.applyBindings(viewModel);
 });
 
-// FunÃ§Ã£o para Smooth Scrolling
+// Função para Smooth Scrolling
 // Todos os links com #
 $('a[href*="#"]')
-
-    // Remover links que nÃ£o vÃ£o a lado nenhum
+    // Remover links que não vão a lado nenhum
     .not('[href="#"]')
     .not('[href="#0"]')
     .click(function (event) {
-        // Links na mesma pÃ¡gina
+        // Links na mesma página
         if (
             location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
             &&
@@ -135,18 +175,17 @@ $('a[href*="#"]')
                 $('html, body').animate({
                     scrollTop: target.offset().top
                 }, 1000, function () {
-                    // Callback depois da animaÃ§Ã£o
+                    // Callback depois da animação
                     // Mudar o foco
                     var $target = $(target);
                     $target.focus();
-                    if ($target.is(":focus")) { // Verificar se o alvo estÃ¡ focado
+                    if ($target.is(":focus")) { // Verificar se o alvo está focado
                         return false;
                     } else {
-                        $target.attr('tabindex', '-1'); // Tabindex para elementos nÃ£o focÃ¡veis
+                        $target.attr('tabindex', '-1'); // Tabindex para elementos não focáveis
                         $target.focus(); // Definir foco outra vez
                     };
                 });
             }
         }
     });
-
