@@ -28,3 +28,12 @@ div.container {
 .text-light-green {
     color: #3ac200;
 }
+
+/*View model Produto CSS*/
+
+#imgProduto {
+    height: auto;
+    width: 100%;
+    margin: auto;
+    border-radius: 0;
+}
