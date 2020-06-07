@@ -26,10 +26,10 @@
         },
     ]
 
-    $('.validate-form').on('submit',function(){
+    $('.validate-form').on('submit',function() {
         var check = true;
 
-        if (checkCredentials(input) == false)
+        if (checkCredentials() == false)
             check = false;
         console.log(check);
       
@@ -44,18 +44,16 @@
         }
 
         
-        
         return check;
     });
 
 
-    function checkCredentials(input) {
-        var user = document.getElementById("username").value;
-        var pass = document.getElementById("password").value;
+    function checkCredentials() {
+        var user = $("#username").val();
+        var pass = $("#password").val();
 
         for (var i = 0; i < objLogin.length; i++) {
             if (user == objLogin[i].username && pass == objLogin[i].password) {
-                console.log(username + " is logged IN!");
                 return true;
             }
         }
@@ -73,13 +71,13 @@
     function validate(input) {
        
 
-        if($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
-            if($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null) {
+        if ($(input).attr('type') == 'email' || $(input).attr('name') == 'email') {
+            if ($(input).val().trim().match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{1,5}|[0-9]{1,3})(\]?)$/) == null ) {
                 return false;
             }
         }
         else {
-            if($(input).val().trim() == ''){
+            if ($(input).val().trim() == '' || checkCredentials() == false){
                 return false;
             }
         }
