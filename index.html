@@ -1,0 +1,181 @@
+﻿<html>
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CityFarm</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand navbar-dark bg-green fixed-top">
+		<a class="navbar-brand" href="index.html">
+			<span class="fa-stack mr-2">
+				<i class="fa fa-building fa-stack-2x pb-1"></i>
+				<i class="fa fa-circle fa-stack-1x text-light-green h2 logo"></i>
+				<i class="fa fa-leaf fa-stack-1x logo text-white"></i>
+			</span>
+			<span>CityFarm</span>
+		</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto clearfix mt-2">
+				<li class="nav-item dropdown float-right">
+					<a class="nav-link dropdown-toggle" href="#" id="cartDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-shopping-basket h2"></i>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="cartDropdown">
+						<div style="max-height: 300px; overflow-y: scroll;">
+							<!--ko foreach: displayCarr-->
+							<div class="dropdown-item" data-bind="text: nome + ' , ' + quantidade + ' unidades'"></div>
+							<!--/ko-->
+						</div>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item">Total: <span data-bind="text: precoTotal"></span>&euro;</a>
+					</div>
+				</li>
+				<!-- if do KO aqui -->
+				<li class="nav-item dropdown float-right">
+					<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user-circle h2"></i>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div>
+				</li>
+				<!-- fim do if -->
+				<!-- outro if do KO -->
+				<li class="mt-1">
+					<button class="btn btn-success">
+						Login
+					</button>
+				</li>
+				<!-- fim do if -->
+			</ul>
+		</div>
+	</nav>
+
+
+	<!-- Banner -->
+	<div id="banner" class="jumbotron">
+		<!-- Search -->
+		<div class="d-sm-flex justify-content-center align-items-center w-75 mx-auto">
+			<input id="search" class="form-control mr-sm-2 col-12 col-sm-9" type="search" placeholder="Do que está à procura?" aria-label="Search">
+			<button id="searchButton" class="btn btn-success my-2 my-sm-0 col-12 col-sm-3" type="submit">Search</button>
+		</div>
+	</div>
+
+	<!-- Conteúdo -->
+	<div id="content" class="container">
+		<div class="row mt-5">
+			<!-- mudar para um data-bind depois -->
+			<h1 id="listHeader" class="col-md-12 col-lg-7">
+				Produtos Populares
+			</h1>
+			<div class="col-md-12 col-lg-5 d-inline-flex flex-row-reverse align-items-center">
+				<!-- dropdown do filtro -->
+				<select class="ml-2 form-control" id="tagSelect">
+					<option value="all">Todas as categorias</option>
+					<!-- ko foreach: tagList -->
+					<option data-bind="text: $data, attr: {value: $data}"></option>
+					<!-- /ko -->
+				</select>
+
+				<!-- botão para limpar pesquisa -->
+				<div>
+					<button id="clean" class="btn btn-success" style="display: none">Limpar resultados</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- ko if: displayList().length == 0 -->
+		<div class="row mt-5">
+			<h3 class="mx-auto">Sem resultados para "<span data-bind="text: searchTerm"></span>"</h3>
+		</div>
+		<!-- /ko -->
+		<!-- Lista de produtos -->
+		<div class="row mx-2">
+			<!-- ko foreach: displayList -->
+			<div class="col-md-6 col-lg-4 mt-3">
+				<div class="card">
+					<img class="card-img-top" data-bind="attr: { src: imageURL, alt: nome}">
+					<div class="card-body">
+						<h4 class="card-title" data-bind="text: nome"></h4>
+						<h4 class="card-title"><span class="text-danger" data-bind="text: preco + '€'"></span> por [porção]</h4>
+						<h6 class="card-title">Produtor: <span data-bind="text: produtor"></span></h6>
+						<p class="card-text" data-bind="text: descricao"></p>
+						<a class="btn btn-success" data-bind="click: ShowProduto"
+						   data-toggle="modal"
+						   data-target="#exampleModalCenter"><i style="color: white;">Ver produto</i></a>
+					</div>
+				</div>
+			</div>
+			<!-- /ko -->
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered mw-100 w-75" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body .container-fluid">
+					<div class="row">
+						<div class="col-md-5 col-sm-12">
+							<img id="imgProduto" src="" />
+						</div>
+
+						<div class="col-md-7 col-sm-12 flex-column d-flex">
+							<p id="vmProdutoProdutor"></p>
+							<p id="vmProdutoDescricao"></p>
+
+							<br />
+
+							<p id="vmProdutoQuantidade"></p>
+							<p id="vmProdutoPreco"></p>
+							<br />
+
+							<div class="row mt-auto">
+								<input class="form-control col-md-1 col-sm-2 ml-3" id="inputQuantidade" type="number" value="1" min="1" />
+								<button class="btn btn-success col-md-3 col-sm-4 ml-2" id="addCarr"><i style="color:white;">Adiconar ao carrinho</i></button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Footer -->
+	<nav class="navbar navbar-expand navbar-dark bg-dark fixed-bottom" id="footer">
+		<div class="collapse navbar-collapse">
+			<ul class="navbar-nav mx-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#banner">Voltar ao topo<span class="sr-only">(current)</span></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/knockout-3.5.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="js/classes.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>
