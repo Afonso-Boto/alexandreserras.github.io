@@ -9,19 +9,19 @@
 
     var objLogin = [
         {
-            username: "AfonsoBoto@ua.pt",
+            username: "afonsoboto@ua.pt",
             password: "afonso"
         },
         {
-            username: "TomasCandeias@ua.pt",
+            username: "tomascandeias@ua.pt",
             password: "tomas"
         },
         {
-            username: "AlexandreSerras@ua.pt",
+            username: "alexandreserras@ua.pt",
             password: "alexandre"
         },
         {
-            username: "DiogoMonteiro@ua.pt",
+            username: "diogomonteiro@ua.pt",
             password: "diogo"
         },
     ]
