@@ -128,11 +128,12 @@ $(document).ready(function () {
 	}
 
 	$("#addCarr").on("click", function () {
-		//If para numeros inputs negativos!!! -1 add a quant e ao carr
 		produtoAtual.quantidade = $("#inputQuantidade").val();
-		produtoSelect.quantidade -= produtoAtual._quantidade;
-
-		viewModel.displayCarr.push(produtoAtual);
+		if (produtoAtual.quantidade > 0 && produtoAtual.quantidade <= produtoSelect._quantidade) {
+			produtoSelect.quantidade -= produtoAtual._quantidade;
+			viewModel.displayCarr.push(produtoAtual);
+		}
+		
 	});	
 
 	ko.applyBindings(viewModel);
