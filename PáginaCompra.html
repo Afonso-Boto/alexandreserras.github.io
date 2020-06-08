@@ -1,122 +1,122 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CityFarm</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/all.min.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link href="css/cssPagamento.css" rel="stylesheet" />
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>CityFarm</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/all.min.css" />
+	<link rel="stylesheet" href="css/style.css" />
+	<link href="css/cssPagamento.css" rel="stylesheet" />
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand navbar-dark bg-green fixed-top">
-        <a class="navbar-brand" href="index.html">
-            <span class="fa-stack mr-2">
-                <i class="fa fa-building fa-stack-2x pb-1"></i>
-                <i class="fa fa-circle fa-stack-1x text-light-green h2 logo"></i>
-                <i class="fa fa-leaf fa-stack-1x logo text-white"></i>
-            </span>
-            <span>CityFarm</span>
-        </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto clearfix mt-2">
-               
-                <!-- ko if: localStorage.getItem("logged") === "true" -->
-                <li class="nav-item dropdown float-right">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user-circle h2"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <button id="logout" class="btn btn-success" hidden>Logout</button>
-                    </div>
-                </li>
-                <!-- /ko -->
-                <!-- ko if: localStorage.getItem("logged") != "true" -->
-                <li class="mt-1">
-                    <a class="btn btn-success" href="login.html">
-                        Login
-                    </a>
-                </li>
-                <!-- /ko -->
-            </ul>
-        </div>
-    </nav>
-    <br />
-    <br />
-    <br />
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand navbar-dark bg-green fixed-top">
+		<a class="navbar-brand" href="index.html">
+			<span class="fa-stack mr-2">
+				<i class="fa fa-building fa-stack-2x pb-1"></i>
+				<i class="fa fa-circle fa-stack-1x text-light-green h2 logo"></i>
+				<i class="fa fa-leaf fa-stack-1x logo text-white"></i>
+			</span>
+			<span>CityFarm</span>
+		</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto clearfix mt-2">
+			   
+				<!-- ko if: localStorage.getItem("logged") === "true" -->
+				<li class="nav-item dropdown float-right">
+					<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						<i class="fas fa-user-circle h2"></i>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<button id="logout" class="btn btn-success" hidden>Logout</button>
+					</div>
+				</li>
+				<!-- /ko -->
+				<!-- ko if: localStorage.getItem("logged") != "true" -->
+				<li class="mt-1">
+					<a class="btn btn-success" href="login.html">
+						Login
+					</a>
+				</li>
+				<!-- /ko -->
+			</ul>
+		</div>
+	</nav>
+	<br />
+	<br />
+	<br />
 
-    <!-- Lista de produtos -->
-    <div class="row mx-2">
-        <!-- ko foreach: displayList -->
-        <div  class="row mx-auto h-50 w-75 maindiv">
+	<!-- Lista de produtos -->
+	<div class="row mx-2">
+		<!-- ko foreach: displayList -->
+		<div  class="row mx-auto h-50 w-75 maindiv">
 
-            <div class="col-md-4 col-sm-12 ">
-                <p data-bind="text: _nome"></p>
-            </div>
-            <div class="col-md-4 col-sm-12">
-                <p data-bind="text: _quantidade"></p>
-            </div>
-            <div class="col-md-3 col-sm-8 valor ">
-                <p data-bind="text: _preco*_quantidade"></p>
-            </div>
+			<div class="col-md-4 col-sm-12 ">
+				<p data-bind="text: _nome"></p>
+			</div>
+			<div class="col-md-4 col-sm-12">
+				<p data-bind="text: _quantidade"></p>
+			</div>
+			<div class="col-md-3 col-sm-8 valor ">
+				<p data-bind="text: _preco*_quantidade"></p>
+			</div>
 
-            <div class="col-md-1 lixo">
-                <button  data-bind="click:  $parent.removeProduto" class="elimina btn btn-outline-danger"><i class="fas fa-trash-alt" style="font-size: 24px;"></i></button>
-            </div>
-           
-        </div>
-       
-        <!-- /ko -->
-    </div>
+			<div class="col-md-1 lixo">
+				<button  data-bind="click:  $parent.removeProduto" class="elimina btn btn-outline-danger"><i class="fas fa-trash-alt" style="font-size: 24px;"></i></button>
+			</div>
+		   
+		</div>
+	   
+		<!-- /ko -->
+	</div>
 
-    <div class="conta">
-        <p id="total"  class="mx-auto h-50 w-75 ">Total a pagar:<span data-bind="text: precoTotal"></span> &euro;</p>
-    </div>
-    <!-- Button trigger modal -->
-    <div class="d-sm-flex justify-content-center align-items-center w-75 mx-auto">
-        <button id="finaliza" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success">
-            Confirmar a compra
-        </button>
-    </div>
-    <!-- Após ativar a modal é necessário esvaziar o carrinho-->
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Finalizar de compra:</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Compra efetuada com sucesso obrigado por preferir o CityFarm até uma próxima compra</p>
-                </div>
+	<div class="conta">
+		<p id="total"  class="mx-auto h-50 w-75 ">Total a pagar: <span data-bind="text: precoTotal"></span> &euro;</p>
+	</div>
+	<!-- Button trigger modal -->
+	<div class="d-sm-flex justify-content-center align-items-center w-75 mx-auto">
+		<button id="finaliza" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success">
+			Confirmar a compra
+		</button>
+	</div>
+	<!-- Após ativar a modal é necessário esvaziar o carrinho-->
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Finalizar de compra:</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p>Compra efetuada com sucesso obrigado por preferir o CityFarm até uma próxima compra</p>
+				</div>
 
-            </div>
-        </div>
-    </div>
-    <!-- Footer -->
-    <nav class="navbar navbar-expand navbar-dark bg-dark fixed-bottom" id="footer">
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#banner">Voltar ao topo<span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/knockout-3.5.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="js/classes.js"></script>
-    <script src="js/PáginaCompra.js"></script>
+			</div>
+		</div>
+	</div>
+	<!-- Footer -->
+	<nav class="navbar navbar-expand navbar-dark bg-dark fixed-bottom" id="footer">
+		<div class="collapse navbar-collapse">
+			<ul class="navbar-nav mx-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#banner">Voltar ao topo<span class="sr-only">(current)</span></a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/knockout-3.5.1.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	<script src="js/classes.js"></script>
+	<script src="js/PáginaCompra.js"></script>
 
 </body>
 </html>
