@@ -18,7 +18,6 @@ $(document).ready(function () {
     }
 
    
-    
     // json com a informação dos produtos (nome, preço, produtor, tags, URL da imagem, descrição)
     var json = '[{"nome": "Alface", "preco": 0.8, "produtor": "Alberto", "tags": ["Vegetal"], "imageURL": "images/alface.jpg", "descricao": "A alface possui baixo teor calórico, já que cada a 100 g dela contém somente 15 calorias. A folha contém vitamina A, vitamina C , minerais como cálcio, fósforo e ferro. "},' +
         '{"nome": "Maçã", "preco": 0.3, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "images/maca.jpg", "descricao": "A maçã possui um excelente valor nutritivo, pois na sua casca encontra-se a pectina que ajuda a reduzir o colesterol do sangue. Além disso, é um fruto rico em vitaminas B1, B2,  ferro e fósforo." },' +
@@ -40,10 +39,13 @@ $(document).ready(function () {
     // leitura inicial do json
     var parsed = JSON.parse(json);
 
-    // lista de todos os produtos disponíveis
+    // produto que poderá ser adicionado ao carrinho
     var produtoAtual;
+    // produto a ser visualizado na modal
     var produtoSelect;
+    // lista de todos os produtos disponíveis
     var produtos = [];
+
     // adicionar produtos lidos do json à lista de produtos como objetos da classe Produto
     // ao mesmo tempo determina-se todos os tags diferentes que existem
     for (p in parsed) {
@@ -56,13 +58,12 @@ $(document).ready(function () {
         });
     }
 
-    //console.log(produtos);
-    //console.log(viewModel.tagList());
-
     // inicialização da lista de produtos exibida
     viewModel.displayList(produtos);
-  //  viewModel.displayCarr(JSON.parse(localStorage.getItem("car")))
-    
+    // buscar carrinho se existir
+    if (localStorage.getItem("car") != "[]" && localStorage.getItem("car") != null) {
+        viewModel.displayCarr(JSON.parse(localStorage.getItem("car")));
+    }
    
     // lista dos produtos que correspondem à pesquisa
     var searchResults = produtos;
@@ -105,7 +106,6 @@ $(document).ready(function () {
         filterByTag();
     }
 
-
     // Filtrar os resultados atuais ao selecionar um tag
     $("#tagSelect").on('change', function () {
         filterByTag()
@@ -126,6 +126,7 @@ $(document).ready(function () {
         }
     }
 
+    // define o produto atual e coloca a informação do produto na modal
     ShowProduto = function (produto) {
         console.log("Show Produto:");
 
@@ -145,14 +146,19 @@ $(document).ready(function () {
         $("#inputQuantidade").attr("max", produto._quantidade);
     }
 
+    // adiciona o produto atual ao carrinho
     $("#addCarr").on("click", function () {
-        produtoAtual.quantidade = $("#inputQuantidade").val();
-        if (produtoAtual.quantidade > 0 && produtoAtual.quantidade <= produtoSelect._quantidade) {
+        produtoAtual.quantidade = parseFloat($("#inputQuantidade").val());
+        // verificar se é uma quantidade válida (inteira, maior que 0 e menor ou igual ao stock disponível)
+        if (produtoAtual.quantidade > 0 && produtoAtual.quantidade <= produtoSelect._quantidade && Number.isInteger(produtoAtual.quantidade)) {
             produtoSelect.quantidade -= produtoAtual._quantidade;
             viewModel.displayCarr.push(produtoAtual);
             localStorage.setItem("car", JSON.stringify(viewModel.displayCarr()));
+            $("#exampleModalCenter").modal("hide");
         }
-
+        else {
+            alert("Quantidade inválida!");
+        }
     });
 
     ko.applyBindings(viewModel);

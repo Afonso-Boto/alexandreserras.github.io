@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    // viewModel - contém os dataBinds realizados na página
+    // viewModel - contém os data-binds realizados na página
     var viewModel = {
         displayList: ko.observableArray(),
         tagList: ko.observableArray(),
@@ -20,7 +20,7 @@
     viewModel.displayList(JSON.parse(localStorage.getItem("car")));
     $("#finaliza").on("click", function () {
         viewModel.displayList.removeAll();
-       // localStorage.setItem("car", JSON.stringify([]))
+        localStorage.setItem("car", "[]")
     })
    
    $("#logout").click( function(){
