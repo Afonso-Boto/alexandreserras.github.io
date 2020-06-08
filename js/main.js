@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     // viewModel - contém os dataBinds realizados na página
     var viewModel = {
@@ -13,6 +12,7 @@ $(document).ready(function () {
             viewModel.displayCarr().forEach(function (p) {
                 t += p._preco * p._quantidade;
             });
+            t = Math.round(t * 100) / 100;
             return t
         })
     }
@@ -34,6 +34,7 @@ $(document).ready(function () {
         '{"nome": "Melancia", "preco": 2, "produtor": "Alberto", "tags": ["Fruta"], "imageURL": "../images/melancia.jpg", "descricao": " Mas os benefícios da melancia não são apenas sabor e hidratação. Com apenas 46 calorias por 100 gramas a melancia é rica em vitamina C, vitamina A, licopeno, entre outros compostos que proporcionam benefícios para a saúde " }, ' +
         '{"nome": "Limão", "preco": 0.3, "produtor": "Joana", "tags": ["Fruta"], "imageURL": "../images/limao.jpg", "descricao": " O limão é um fruto rico em vitamina C e em 100 gramas possui, apenas, 26 calorias. São muitos os proveitos resultantes do seu consumo, que podem ser obtidos através do sumo, da polpa ou das raspas da casca, rica em óleos essenciais. " }, ' +
         '{"nome": "Laranja", "preco": 0.70, "produtor": "José", "tags": ["Fruta"], "imageURL": "../images/laranjas.jpg", "descricao": " A sua doçura natural e a variedade das utilizações, ao natural, em sumo ou em compotas, contribuíram para a sua diversificação. Fique a conhecer a sua composição nutricional, benefícios para a saúde e conselhos de consumo das laranjas. "}]';
+  
 
     // leitura inicial do json
     var parsed = JSON.parse(json);

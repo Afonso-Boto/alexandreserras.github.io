@@ -81,6 +81,7 @@ class Produto {
         this._tags = tags;
         this._imageURL = imageURL;
         this._descricao = descricao;
+        this._descricaoSimples = descricao.substring(0, 120) + "...";
     }
 
     get nome() {
@@ -103,6 +104,10 @@ class Produto {
     }
     get descricao() {
         return this._descricao;
+    }
+
+    get descricaoSimples() {
+        return this._descricaoSimples;
     }
 
     set quantidade(q) {
