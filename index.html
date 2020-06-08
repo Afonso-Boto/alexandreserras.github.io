@@ -31,12 +31,13 @@
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="cartDropdown">
 						<div style="max-height: 300px; overflow-y: scroll;">
 							<!--ko foreach: displayCarr-->
-							<div class="dropdown-item" data-bind="text: nome + ' , ' + quantidade + ' unidades'"></div>
+							<div class="dropdown-item" data-bind="text: _nome + ' , ' + _quantidade + ' unidades'"></div>
 							<!--/ko-->
 						</div>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item">Total: <span data-bind="text: precoTotal"></span>&euro;</a>
-					</div>
+                        <a class="btn btn-success" href="PáginaCompra.html">Checkout</a>
+                    </div>
 				</li>
 				<!-- if do KO aqui -->
 				<li class="nav-item dropdown float-right">
@@ -53,9 +54,9 @@
 				<!-- fim do if -->
 				<!-- outro if do KO -->
 				<li class="mt-1">
-					<a class="btn btn-success" href="login.html">
+					<button class="btn btn-success">
 						Login
-					</a>
+					</button>
 				</li>
 				<!-- fim do if -->
 			</ul>
@@ -108,7 +109,7 @@
 					<img class="card-img-top" data-bind="attr: { src: imageURL, alt: nome}">
 					<div class="card-body">
 						<h4 class="card-title" data-bind="text: nome"></h4>
-						<h4 class="card-title"><span class="text-danger" data-bind="text: preco + '€'"></span> por [porção]</h4>
+						<h4 class="card-title"><span class="text-danger" data-bind="text: preco + '€'"></span> por unidade</h4>
 						<h6 class="card-title">Produtor: <span data-bind="text: produtor"></span></h6>
 						<p class="card-text" data-bind="text: descricao"></p>
 						<a class="btn btn-success" data-bind="click: ShowProduto"
