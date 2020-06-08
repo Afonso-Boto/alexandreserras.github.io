@@ -106,13 +106,13 @@
 			<!-- ko foreach: displayList -->
 			<div class="col-md-6 col-lg-4 mt-3">
 				<div class="card">
-					<img class="card-img-top" data-bind="attr: { src: imageURL, alt: nome}">
-					<div class="card-body">
+					<img class="card-img-top" style="height: 200px;" data-bind="attr: { src: imageURL, alt: nome}">
+					<div class="card-body d-flex flex-column" style="height: 320px;">
 						<h4 class="card-title" data-bind="text: nome"></h4>
 						<h4 class="card-title"><span class="text-danger" data-bind="text: preco + '€'"></span> por unidade</h4>
 						<h6 class="card-title">Produtor: <span data-bind="text: produtor"></span></h6>
-						<p class="card-text" data-bind="text: descricao"></p>
-						<a class="btn btn-success" data-bind="click: ShowProduto"
+						<p class="card-text" data-bind="text: descricaoSimples"></p>
+						<a class="btn btn-success mt-auto" data-bind="click: ShowProduto"
 						   data-toggle="modal"
 						   data-target="#exampleModalCenter"><i style="color: white;">Ver produto</i></a>
 					</div>
