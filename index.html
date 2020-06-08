@@ -23,43 +23,43 @@
 			<span>CityFarm</span>
 		</a>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav ml-auto clearfix mt-2">
-				<li class="nav-item dropdown float-right">
-					<a class="nav-link dropdown-toggle" href="#" id="cartDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-shopping-basket h2"></i>
-					</a>
-					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="cartDropdown">
-						<div style="max-height: 300px; overflow-y: scroll;">
-							<!--ko foreach: displayCarr-->
-							<div class="dropdown-item" data-bind="text: _nome + ' , ' + _quantidade + ' unidades'"></div>
-							<!--/ko-->
-						</div>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item">Total: <span data-bind="text: precoTotal"></span>&euro;</a>
+            <ul class="navbar-nav ml-auto clearfix mt-2">
+                <li class="nav-item dropdown float-right">
+                    <a class="nav-link dropdown-toggle" href="#" id="cartDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-shopping-basket h2"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="cartDropdown">
+                        <div style="max-height: 300px; overflow-y: scroll;">
+                            <!--ko foreach: displayCarr-->
+                            <div class="dropdown-item" data-bind="text: _nome + ' , ' + _quantidade + ' unidades'"></div>
+                            <!--/ko-->
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item">Total: <span data-bind="text: precoTotal"></span>&euro;</a>
                         <a class="btn btn-success" href="PáginaCompra.html">Checkout</a>
                     </div>
-				</li>
-				<!-- if do KO aqui -->
-				<li class="nav-item dropdown float-right">
-					<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						<i class="fas fa-user-circle h2"></i>
-					</a>
-					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-						<a class="dropdown-item" href="#">Action</a>
-						<a class="dropdown-item" href="#">Another action</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
-					</div>
-				</li>
-				<!-- fim do if -->
-				<!-- outro if do KO -->
-				<li class="mt-1">
-					<a class="btn btn-success" href="login.html">
-						Login
-					</a>
-				</li>
-				<!-- fim do if -->
-			</ul>
+                </li>
+                <!-- ko if: localStorage.getItem("logged") === 'true'-->
+                <li class="nav-item dropdown float-right">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle h2"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <!-- /ko -->
+                <!-- ko if: localStorage.getItem("logged") != 'true' -->
+                <li class="mt-1">
+                    <a class="btn btn-success" href="login.html">
+                        Login
+                    </a>
+                </li>
+                <!-- /ko -->
+            </ul>
 		</div>
 	</nav>
 

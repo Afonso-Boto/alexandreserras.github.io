@@ -16,7 +16,8 @@ $(document).ready(function () {
             return t
         })
     }
-    
+
+   
     
     // json com a informação dos produtos (nome, preço, produtor, tags, URL da imagem, descrição)
     var json = '[{"nome": "Alface", "preco": 0.8, "produtor": "Alberto", "tags": ["Vegetal"], "imageURL": "../images/alface.jpg", "descricao": "A alface possui baixo teor calórico, já que cada a 100 g dela contém somente 15 calorias. A folha contém vitamina A, vitamina C , minerais como cálcio, fósforo e ferro. "},' +

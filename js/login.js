@@ -1,6 +1,7 @@
 
 (function ($) {
     "use strict";
+    
 
     
     /*==================================================================
@@ -54,10 +55,11 @@
 
         for (var i = 0; i < objLogin.length; i++) {
             if (user == objLogin[i].username && pass == objLogin[i].password) {
+                localStorage.setItem("logged", true);
                 return true;
             }
         }
-
+        localStorage.setItem("logged", false);
         return false;
     }
 
