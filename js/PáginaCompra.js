@@ -23,6 +23,9 @@
        // localStorage.setItem("car", JSON.stringify([]))
     })
    
+   $("#logout").click( function(){
+	   localStorage.setItem("logged", false);
+   })
     
     ko.applyBindings(viewModel);
 });
