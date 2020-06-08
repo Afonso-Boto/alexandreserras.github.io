@@ -152,7 +152,15 @@ $(document).ready(function () {
         // verificar se é uma quantidade válida (inteira, maior que 0 e menor ou igual ao stock disponível)
         if (produtoAtual.quantidade > 0 && produtoAtual.quantidade <= produtoSelect._quantidade && Number.isInteger(produtoAtual.quantidade)) {
             produtoSelect.quantidade -= produtoAtual._quantidade;
-            viewModel.displayCarr.push(produtoAtual);
+
+            var index = indexOfProdutoInCarrinho(produtoAtual);
+            if (index == -1)
+                viewModel.displayCarr.push(produtoAtual);
+            else {
+                var produto = viewModel.displayCarr.splice(index, 1)[0];
+                produto._quantidade += produtoAtual._quantidade;
+                viewModel.displayCarr.push(produto);
+            }
             localStorage.setItem("car", JSON.stringify(viewModel.displayCarr()));
             $("#exampleModalCenter").modal("hide");
         }
@@ -160,6 +168,18 @@ $(document).ready(function () {
             alert("Quantidade inválida!");
         }
     });
+
+    // encontra o índice do produto se estiver no carrinho, retorna -1 se não existir
+    indexOfProdutoInCarrinho = function (produto) {
+        for (index in viewModel.displayCarr()) {
+            var nome = viewModel.displayCarr()[index]._nome;
+            var produtor = viewModel.displayCarr()[index]._produtor;
+
+            if (produto._nome === nome && produto._produtor === produtor)
+                return index;
+        }
+        return -1;
+    }
 
     ko.applyBindings(viewModel);
 });
