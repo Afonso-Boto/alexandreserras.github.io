@@ -37,3 +37,12 @@ div.container {
     margin: auto;
     border-radius: 0;
 }
+
+td {
+    padding-top: 12px !important;
+    padding-bottom: 0px !important;
+}
+td:last-child {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+}
