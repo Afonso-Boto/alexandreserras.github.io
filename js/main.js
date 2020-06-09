@@ -180,6 +180,13 @@ $(document).ready(function () {
         }
         return -1;
     }
+	
+	// botão para esvaziar o carrinho
+	$("#clearList").click(function(){
+		viewModel.displayCarr.removeAll();
+		localStorage.setItem("car", "[]");
+	});
+	
 
     ko.applyBindings(viewModel);
 });
