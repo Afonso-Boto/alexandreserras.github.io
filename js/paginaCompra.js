@@ -14,7 +14,7 @@
 			viewModel.displayList().forEach(function (p) {
 				t += p._preco * p._quantidade;
 			});
-			t = Math.round(t * 100) / 100;
+			t = (Math.round(t * 100) / 100).toFixed(2);
 			return t
         }),
         aumentarQuantidade: function (produto) {

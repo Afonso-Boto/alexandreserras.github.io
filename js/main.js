@@ -72,13 +72,13 @@ $(document).ready(function () {
     $("#search").keydown(function () {
         if (event.which == 13) {
             // fazer a pesquisa
-            search(this.value);
+            search(this.value.trim());
         }
     });
     // pesquisar ao clicar no botão de pesquisa
     $("#searchButton").click(function () {
         // fazer a pesquisa
-        search($("#search").val());
+        search($("#search").val().trim());
     });
 
     // limpar pesquisa
@@ -98,7 +98,7 @@ $(document).ready(function () {
         }
         else {
             $("#listHeader").text("Resultados:");
-            $("title").html("CityFarm - " + termo);
+            $("title").html("CityFarm - " + termo.trim());
             $("#clean").show();
         }
         // reiniciar filtro
@@ -141,7 +141,7 @@ $(document).ready(function () {
         $("#vmProdutoDescricao").html("Descrição: " + produto._descricao);
 
         $("#vmProdutoQuantidade").html("Quantidade: " + produto._quantidade);
-        $("#vmProdutoPreco").html("Preço: " + produto._preco + "€");
+        $("#vmProdutoPreco").html("Preço: " + (produto._preco).toFixed(2) + "€");
 
         $("#inputQuantidade").attr("max", produto._quantidade);
     }
