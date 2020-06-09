@@ -89,9 +89,11 @@
 	<div class="row mx-auto w-75 mt-2">
 		<h4 id="total"  class="col-md-6">Total a pagar: <span data-bind="text: precoTotal"></span> &euro;</h4>
         <div class="col-md-6 text-right">
+		<!-- ko if: displayList().length > 0 -->
             <button id="finaliza" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success">
                 Confirmar a compra
             </button>
+		<!-- /ko -->
         </div>
 	</div>
 	<!-- Button trigger modal -->

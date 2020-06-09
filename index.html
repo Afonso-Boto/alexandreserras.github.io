@@ -35,7 +35,9 @@
                         </div>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item">Total: <span data-bind="text: precoTotal"></span>&euro;</a>
+						<!-- ko if: displayCarr().length > 0 -->
                         <a class="btn btn-success" href="paginaCompra.html" style="margin-left: 10px;">Checkout</a>
+						<!-- /ko -->
                     </div>
                 </li>
                 <!-- ko if: localStorage.getItem("logged") === 'true'-->
