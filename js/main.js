@@ -187,6 +187,11 @@ $(document).ready(function () {
 		localStorage.setItem("car", "[]");
 	});
 	
+	// fazer logout
+	$("#loginButton").click(function(){
+		if ($("#loginButton").text() === "Logout")
+			localStorage.setItem("logged", false);
+	});
 
     ko.applyBindings(viewModel);
 });

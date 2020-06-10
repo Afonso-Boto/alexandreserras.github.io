@@ -47,16 +47,23 @@
         }
     }
 
-
 	viewModel.displayList(JSON.parse(localStorage.getItem("car")));
+	
+	// finalizar compra se estiver logged in, senão, redirecionar para a página de login
 	$("#finaliza").on("click", function () {
-		viewModel.displayList.removeAll();
-		localStorage.setItem("car", "[]")
+		if ($("#loginButton").text() === "Login")
+			window.location.href = "login.html";
+		else {
+			viewModel.displayList.removeAll();
+			localStorage.setItem("car", "[]")
+		}
 	})
    
-   $("#logout").click( function(){
-	   localStorage.setItem("logged", false);
-   })
+	// fazer logout
+	$("#loginButton").click(function(){
+		if ($("#loginButton").text() === "Logout")
+			localStorage.setItem("logged", false);
+	});
 	
 	ko.applyBindings(viewModel);
 });

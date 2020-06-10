@@ -54,13 +54,13 @@
                     </div>
                 </li>
                 <!-- /ko -->
-                <!-- ko if: localStorage.getItem("logged") != 'true' -->
+                
                 <li class="mt-1">
-                    <a class="btn btn-success" href="login.html">
+                    <a id="loginButton" class="btn btn-success" href="login.html" data-bind="text: localStorage.getItem('logged') === 'true' ? 'Logout' : 'Login', attr: {href: localStorage.getItem('logged') === 'true' ? 'index.html' : 'login.html'}">
                         Login
                     </a>
                 </li>
-                <!-- /ko -->
+                
             </ul>
 		</div>
 	</nav>
