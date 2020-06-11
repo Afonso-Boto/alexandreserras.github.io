@@ -16,36 +16,36 @@
 			});
 			t = (Math.round(t * 100) / 100).toFixed(2);
 			return t
-        }),
-        aumentarQuantidade: function (produto) {
-            produto._quantidade++;
-            $("#dim" + produto._nome).prop("disabled", false);
-            localStorage.setItem("car", JSON.stringify(viewModel.displayList()));
-            // isto é mesmo parvo mas é o que funciona
-            id = "#sp" + event.target.id.substring(3, event.target.id.length);
-            var currentText = $(id).text();
-            $(id).text(currentText / 1 + 1);
-            viewModel.displayList.valueHasMutated();
+		}),
+		aumentarQuantidade: function (produto) {
+			produto._quantidade++;
+			$("#dim" + produto._nome).prop("disabled", false);
+			localStorage.setItem("car", JSON.stringify(viewModel.displayList()));
+			// isto é mesmo parvo mas é o que funciona
+			id = "#sp" + event.target.id.substring(3, event.target.id.length);
+			var currentText = $(id).text();
+			$(id).text(currentText / 1 + 1);
+			viewModel.displayList.valueHasMutated();
 
-            // mudar preço
-            id = "#pr" + produto._nome;
-            $(id).text((Math.round(produto._preco * produto._quantidade * 100) / 100).toFixed(2));
-        },
-        diminuirQuantidade: function (produto) {
-            if (--produto._quantidade == 1)
-                $("#dim" + produto._nome).prop("disabled", true);
-            localStorage.setItem("car", JSON.stringify(viewModel.displayList()));
-            // isto é mesmo parvo mas é o que funciona
-            id = "#sp" + event.target.id.substring(3, event.target.id.length);
-            var currentText = $(id).text();
-            $(id).text(currentText / 1 - 1);
-            viewModel.displayList.valueHasMutated();
+			// mudar preço
+			id = "#pr" + produto._nome;
+			$(id).text((Math.round(produto._preco * produto._quantidade * 100) / 100).toFixed(2));
+		},
+		diminuirQuantidade: function (produto) {
+			if (--produto._quantidade == 1)
+				$("#dim" + produto._nome).prop("disabled", true);
+			localStorage.setItem("car", JSON.stringify(viewModel.displayList()));
+			// isto é mesmo parvo mas é o que funciona
+			id = "#sp" + event.target.id.substring(3, event.target.id.length);
+			var currentText = $(id).text();
+			$(id).text(currentText / 1 - 1);
+			viewModel.displayList.valueHasMutated();
 
-            // mudar preço
-            id = "#pr" + produto._nome;
-            $(id).text((Math.round(produto._preco * produto._quantidade * 100) / 100).toFixed(2));
-        }
-    }
+			// mudar preço
+			id = "#pr" + produto._nome;
+			$(id).text((Math.round(produto._preco * produto._quantidade * 100) / 100).toFixed(2));
+		}
+	}
 
 	viewModel.displayList(JSON.parse(localStorage.getItem("car")));
 	

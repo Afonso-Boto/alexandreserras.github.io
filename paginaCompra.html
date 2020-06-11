@@ -37,8 +37,8 @@
 				<!-- /ko -->
 				<li class="mt-1">
 					<a id="loginButton" class="btn btn-success" href="login.html" data-bind="text: localStorage.getItem('logged') === 'true' ? 'Logout' : 'Login', attr: {href: localStorage.getItem('logged') === 'true' ? 'index.html' : 'login.html'}">
-                        Login
-                    </a>
+						Login
+					</a>
 				</li>
 			</ul>
 		</div>
@@ -49,50 +49,50 @@
 
 	<!-- Lista de produtos -->
 	<table class="mx-auto w-75 table table-striped" >
-        <thead>
-            <tr>
-                <th>
-                    <p>Produto</p>
-                </th>
-                <th>
-                    <p>Quantidade</p>
-                </th>
-                <th colspan="2">
-                    <p>Preço</p>
-                </th>
-                
-            </tr>
-        </thead>
-        <tbody data-bind="foreach: displayList">
-            <tr>
-                <td>
-                    <p data-bind="text: _nome"></p>
-                </td>
-                <td>
-                    <button class="btn btn-sm btn-outline-dark diminui" data-bind="click: $parent.diminuirQuantidade, attr: {id: 'dim' + _nome}, enable: _quantidade> 1"><i data-bind="attr: {id: 'aum' + _nome}" class="fas fa-minus"></i></button>
-                    <span class="d-inline-block text-right pr-1" style="width: 20px;" data-bind="text: _quantidade,  attr: {id: 'sp' + _nome}"></span>
-                    <button class="btn btn-sm btn-outline-dark aumenta" data-bind="click: $parent.aumentarQuantidade, attr: {id: 'aum' + _nome}"><i data-bind="attr: {id: 'aum' + _nome}" class="fas fa-plus"></i></button>
-                </td>
-                <td>
-                    <p data-bind="text: (Math.round(_preco*_quantidade *100) /100).toFixed(2), attr: {id: 'pr' + _nome}"></p>
-                </td>
+		<thead>
+			<tr>
+				<th>
+					<p>Produto</p>
+				</th>
+				<th>
+					<p>Quantidade</p>
+				</th>
+				<th colspan="2">
+					<p>Preço</p>
+				</th>
+				
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: displayList">
+			<tr>
+				<td>
+					<p data-bind="text: _nome"></p>
+				</td>
+				<td>
+					<button class="btn btn-sm btn-outline-dark diminui" data-bind="click: $parent.diminuirQuantidade, attr: {id: 'dim' + _nome}, enable: _quantidade> 1"><i data-bind="attr: {id: 'aum' + _nome}" class="fas fa-minus"></i></button>
+					<span class="d-inline-block text-right pr-1" style="width: 20px;" data-bind="text: _quantidade,  attr: {id: 'sp' + _nome}"></span>
+					<button class="btn btn-sm btn-outline-dark aumenta" data-bind="click: $parent.aumentarQuantidade, attr: {id: 'aum' + _nome}"><i data-bind="attr: {id: 'aum' + _nome}" class="fas fa-plus"></i></button>
+				</td>
+				<td>
+					<p data-bind="text: (Math.round(_preco*_quantidade *100) /100).toFixed(2), attr: {id: 'pr' + _nome}"></p>
+				</td>
 
-                <td class="text-right">
-                    <button data-bind="click:  $parent.removeProduto" class="elimina btn btn-outline-danger"><i class="fas fa-trash-alt" style="font-size: 1.5em;"></i></button>
-                </td>
-            </tr>
-        </tbody>
+				<td class="text-right">
+					<button data-bind="click:  $parent.removeProduto" class="elimina btn btn-outline-danger"><i class="fas fa-trash-alt" style="font-size: 1.5em;"></i></button>
+				</td>
+			</tr>
+		</tbody>
 	</table>
 
 	<div class="row mx-auto w-75 mt-2">
 		<h4 id="total"  class="col-md-6">Total a pagar: <span data-bind="text: precoTotal"></span> &euro;</h4>
-        <div class="col-md-6 text-right">
+		<div class="col-md-6 text-right">
 		<!-- ko if: displayList().length > 0 -->
-            <button id="finaliza" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success">
-                Confirmar a compra
-            </button>
+			<button id="finaliza" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success">
+				Confirmar a compra
+			</button>
 		<!-- /ko -->
-        </div>
+		</div>
 	</div>
 	<!-- Button trigger modal -->
 	

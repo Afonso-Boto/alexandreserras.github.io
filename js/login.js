@@ -27,7 +27,7 @@
 		},
 	]
 
-	$('.validate-form').on('submit',function() {
+	$('#btn-login').on('click',function() {
 		var check = true;
 
 		if (checkCredentials() == false)
@@ -44,8 +44,10 @@
 			}
 		}
 
-		
-		return check;
+
+		if (check) {
+			$("#btn-login").attr("href", "index.html");
+		}
 	});
 
 
